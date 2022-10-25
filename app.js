@@ -7,8 +7,6 @@ console.clear();
 
 const main = async () => {
 
-    console.log("hola mundo");
-
     let opt = "";
     const tareas = new Tareas();
 
