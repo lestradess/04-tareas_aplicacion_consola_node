@@ -1,6 +1,6 @@
 //import Tarea from ".tarea.js";
 import Tarea from "./tarea.js";
-
+//Notas  La clase Tareas retorna un array de tareas
 class Tareas {
     _listado = {};
     get listarArr(){
@@ -15,7 +15,13 @@ class Tareas {
     constructor(){
         this._listado = {};
     }
+    //Notas  El método cargarTareasFromArray carga las tareas en _listado
+    cargarTareasFromArray ( tareas = []) {
+        let i = 0;
+        this._listado = tareas;
 
+    }
+    //Notas  Método añade una tarea al listado
     crearTarea (desc = "") {
         const tarea = new Tarea(desc);
         this._listado[ tarea.id ] = tarea;

@@ -34,7 +34,7 @@ const preguntas = [
 ]
 
 const inquirerMenu = async () => {
-    console.clear();
+    //console.clear();
     console.log("==================================".green);
     console.log("    Selecione una opción".white);
     console.log("==================================\n".green);
