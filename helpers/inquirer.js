@@ -10,31 +10,31 @@ const preguntas = [
         choices: [
             {
                 value: "1",
-                name: `${"1".green}. Crear tarea`,
+                name: `${ "1.".green } Crear tarea`,
             }, {
                 value: "2",
-                name: `${"2".green}. Listar tareas`,
+                name: `${ "2.".green } Listar tareas`,
             }, {
                 value: "3",
-                name: `${'3'.green}. Listar tareas completadas`,
+                name: `${ '3.'.green } Listar tareas completadas`,
             }, {
                 value: "4",
-                name: `${'4.'.green}. Crear tareas pendientes`,
+                name: `${ '4.'.green } Listar tareas pendientes`,
             }, {
                 value: "5",
-                name: `${'5'.green}. Completar tarea(s)`,
+                name: `${ '5.'.green } Completar tarea(s)`,
             }, {
                 value: "6",
-                name: `${'6'.green}. borrar tarea`,
+                name: `${ '6.'.green } borrar tarea`,
             }, {
                 value: "0",
-                name: `${'0'.green}. Salir`,
+                name: `${ '0.'.green } Salir`,
             } ],
     }
 ]
 
 const inquirerMenu = async () => {
-    //console.clear();
+    console.clear();
     console.log("==================================".green);
     console.log("    Selecione una opción".white);
     console.log("==================================\n".green);
@@ -51,7 +51,6 @@ const pausa = async () => {
             message: `Presione ${ "enter".green } para continuar`
         }
     ];
-    
     await inquirer.prompt(pregunta);
 }
 
@@ -73,4 +72,74 @@ const leerInput = async (message) => {
     return desc;
 }
 
-export { inquirerMenu, pausa,leerInput };
+const listadoBorrarTareas = async (tareas = []) => {
+    const choices = tareas.map((tarea, i) => {
+
+        const idx = `${ i + 1 }.`.green;
+        return {
+            value: tarea.id,
+            name: `${ idx } ${ tarea.desc }`,
+
+        }
+    });
+
+    //Notas Añade una nueva opción al listado de borrar tareas
+    choices.unshift({
+        value: "0",
+        name: "0.".green + ' Cancelar',
+    })
+
+    const pregunta = [ {
+        type: "list",
+        name: "id",
+        message: "Borrar",
+        choices,
+    } ];
+    const { id } = await inquirer.prompt(pregunta);
+    return id;
+
+}
+//Notas Confirmación para borrar una tarea
+const confirmar = async (message) => {
+    const pregunta = [
+        {
+            type: 'confirm',
+            name: "ok",
+            message,
+        }
+    ];
+    const { ok } = await inquirer.prompt(pregunta);
+    return ok;
+}
+
+const MostrarListadoChecklist = async (tareas = []) => {
+    const choices = tareas.map((tarea, i) => {
+
+        const idx = `${ i + 1 }.`.green;
+        return {
+            value: tarea.id,
+            name: `${ idx } ${ tarea.desc }`,
+            checked: (tarea.completadoEn)? true :false,
+        }
+    });
+
+    const pregunta = [ {
+        type: "checkbox",
+        name: "ids",
+        message: "Selecciones",
+        choices,
+    } ];
+    const { ids } = await inquirer.prompt(pregunta);
+    return ids;
+
+}
+
+
+export { 
+    inquirerMenu, 
+    pausa, 
+    leerInput, 
+    listadoBorrarTareas, 
+    confirmar,
+    MostrarListadoChecklist,
+};
